@@ -1,0 +1,14 @@
+bookdown::gitbook:
+  css: css/style.css
+  config:
+    toc:
+      collapse: none
+bookdown::word_document2: default 
+bookdown::pdf_document2:
+  latex_engine: xelatex
+  keep_tex: yes
+#  includes:
+#    in_header: latex/preamble.tex
+#  citation_package: natbib
+  template: latex/template.tex
+bookdown::html_document2: default

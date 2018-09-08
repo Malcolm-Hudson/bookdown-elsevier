@@ -1,0 +1,112 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{lineno,hyperref}
+\usepackage{longtable,booktabs, amsmath, textcomp}
+\usepackage{fontspec} % for \textsubscript
+
+\modulolinenumbers[$modulolinenumbers$]
+
+\journal{Journal of \LaTeX\ Templates}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Elsevier bibliography styles
+%%%%%%%%%%%%%%%%%%%%%%%
+%% To change the style, put a % in front of the second line of the current style and
+%% remove the % from the second line of the style you would like to use.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Numbered
+%\bibliographystyle{model1-num-names}
+
+%% Numbered without titles
+%\bibliographystyle{model1a-num-names}
+
+%% Harvard
+%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Vancouver numbered
+%\usepackage{numcompress}\bibliographystyle{model3-num-names}
+
+%% Vancouver name/year
+%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
+
+%% APA style
+\bibliographystyle{model5-names}\biboptions{authoryear}
+
+%% AMA style
+%\usepackage{numcompress}\bibliographystyle{model6-num-names}
+
+%% `Elsevier LaTeX' style
+%\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+\title{$title$}
+%% or include affiliations in footnotes:
+\author[mymainaddress]{Peng Zhao\corref{mycorrespondingauthor}}
+\cortext[mycorrespondingauthor]{Corresponding author}
+\ead{peng.zhao@uibk.ac.at}
+\author[mymainaddress]{Albin Hammerle}
+\author[mysecondaryaddress]{Matthias Zeeman}
+\author[mymainaddress]{Georg Wohlfahrt}
+
+
+\address[mymainaddress]{Institute of Ecology, University of Innsbruck, Austria}
+\address[mysecondaryaddress]{Karlsruhe Institute of Technology (KIT) Atmospheric Environmental Research Institute of Meteorology and Climate Research (IMK-IFU)}
+
+\begin{frontmatter}
+
+\begin{abstract}
+$abstract$
+\end{abstract}
+
+
+\begin{keyword}
+$keyword$
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+
+
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
