@@ -1,0 +1,301 @@
+---
+title: On the calculation of daytime CO~2~ fluxes measured by automated closed transparent chambers
+bibliography:
+- zhao.bib
+link-citations: yes
+lof: no
+lot: no
+colorlinks: no
+site: bookdown::bookdown_site
+biblio-style: apalike
+toc: no
+abstract: Automated transparent chambers have gained increasing popularity in recent years to continuously measure net CO~2~ fluxes between low-statured canopies and the atmosphere. In this study, we carried out four field campaigns with chamber measurements in a variety of mountainous grasslands. A mathematic stationary point (or critical point, a point at which the derivative of a function is zero) in the CO~2~ mixing ratio time series was found in a substantial fraction of the measurements at all the sites, which had a significant influence on the performances of the regression algorithms. The stationary point was probably due to condensed water on the inner wall of the chamber dome, which reduced the solar radiation and resulted in a reversal of the CO~2~ mixing ratio time series in the chamber (so called *Clouded-Glass Effect* or CGE in this study). This effect~may~be the cause of the observed underestimation of daytime CO~2~ fluxes when using common linear and exponential regression models on continuous automated chamber observations. In order to avoid biased flux estimation of daytime CO~2~ fluxes, we introduced a linearly increasing term to the exponential function so as to compensate for the influence of the CGE, which gives acceptable model errors and improves the CO~2~ flux estimation by 5 \% for temperate mountainous grasslands. We conclude that exponential regression models should be favoured over linear models and recommend to account for the effects of CGE by either excluding ambiguous observations from the flux computations where stationary points can be identified in the CO~2~ mixing ratio time series, or by adding a linearly increasing term to the exponential regression model.
+keyword: net ecosystem exchange, carbon dioxide, chamber measurement
+modulolinenumbers: 1 # define how many lines with a line number
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, signif = 3)
+```
+
+```{r}
+source('scripts/paper.R')
+```
+
+# Highlights {-}
+
+- Daytime CO~2~ fluxes are underestimated by the *Clouded-Glass Effect* of transparent chambers.
+
+- Linear fit for chamber CO~2~ flux estimation should be abandoned.
+
+- Exponential fit is improved with a short observation length or a correction term.
+
+# Introduction
+
+Quantification of ecosystem carbon dioxide (CO~2~) fluxes plays a key role in the estimation of green-house gases' contribution to global warming. The closed chamber technique, carried out with a bottomless sealed container sitting on the soil surface or low-statured canopies, represents a common approach to estimate CO~2~ flux [@denmead2008]. Manually operated chambers have been widely used owing to their low cost, but are very time-consuming to operate. In recent years automated chambers have been applied [@rochette2005] and various systems have been developed over the years [@koskinen2014; @savage2014; @goerres2016]. Automated chambers can continuously measure CO~2~ fluxes with a relatively high frequency (e.g. 30 -- 60 min) over the long term. Furthermore, the development of automated transparent chamber allows continuous measurement of the net ecosystem CO~2~ change (NEE), which is necessary for seasonal and annual carbon budget estimation [@riederer2014].
+
+In an ecosystem, CO~2~ is released to the atmosphere by respiration from plants, microorganisms surrounding the plant roots, and heterotrophic decomposition of soil organic matter and plant litter, while during daytime CO~2~ is removed from the air by the vegetation photosynthesis. The net CO~2~ exchange, i.e. the sum of plant photosynthesis and the ecosystem respiration, can be estimated with the information from the initial slope of the time series of CO~2~ mixing ratio in the chamber measurement. Negative flux values mean net CO~2~ uptake and positive flux values mean net CO~2~ release. Owing to the improvement of the measurement techniques, many chamber  design effects have been eliminated in recent years that could  systematically invalidate trace gas flux observations, such as  inconsistencies resulting from pressure gradients between inside and outside the chamber at various wind speeds [@rochette2005; @xu2006; @pihlatie2013]. However, some challenges and different opinions still exist. For instance, @riederer2014 demonstrated that chamber measurements were biased in comparison with eddy-covariance measurement during night time, and @braendholt2017 found that soil CO~2~ effluxes were overestimated by closed chamber measurements at low atmospheric turbulence, but @goerres2016 indicated that modern automated chambers are capable to provide reliable night time CO~2~ fluxes, and @galvagno2017 reported that chamber measurements agreed with the eddy-covariance method after quality control and proper corrections. With closed chambers, the CO~2~ flux is estimated as the rate of change in CO~2~ mixing ratio inside the chamber. A linear regression of the gas concentration against time is often applied to derive the flux owing to the simplicity [@hendriks2007; @hendriks2010], but @kutzbach2007 considered the exponential regression in CO~2~ concentration data of chamber measurements as the most accurate approach which is practicable in complex vegetation-soil systems against linear regression even if the closure time is short. Later @koskinen2014 argued that the linear fit is simple and robust and no worse than polynomial fitting in their study.  Recently @moffat2017 reported the underestimation by the linear fit and proposed an improved parameterization of the exponential equation with physically meaningful parameters.
+
+Most of these studies in the literature were focused on the trace gas fluxes measured with dark chambers at bare soil surfaces rather than transparent chambers on vegetated surfaces for which a standardized procedure for data processing and quality control is still unavailable [@vargas2011; @galvagno2017]. The rate of change in the CO~2~ mixing ratio in a closed chamber depends on the soil and plant respiration, gross photosynthesis of the plants, and the leakage directly at the chamber components or via the soil pore space [@kutzbach2007]. Modelling of the CO~2~ concentration changes over time in the chamber headspaces is more complicated for vegetated surfaces than for bare soil surfaces since additional processes such as photosynthesis and plant respiration have to be considered [@kutzbach2007]. The CO~2~ flux from the soil to the headspace air is mainly driven by molecular diffusion, which depends on the the soil CO~2~ diffusivity, the CO~2~ concentration difference between the CO~2~-enriched soil pore space and the headspace air, the air temperature and pressure [@matthias1978; @kutzbach2007]. Photosynthesis is dependent on irradiation, which limits the electron transport rate at the chloroplast, and on the intercellular CO~2~ concentration, which limits the activity of Rubisco [@farquhar1980]. For both the non-irradiation-limited photosynthesis situation and the irradiation-limited photosynthesis situation, the evolution of CO~2~ mixing ratio over time was proposed to be simply described against time by an exponential function  [@kutzbach2007]. However, the curvature of the nonlinear curves of CO~2~ mixing ratio evolution for a substantial percentage of the experiments cannot be explained with the proposed theoretical model [@kutzbach2007]. Irradiation, temperature, and humidity in a transparent chamber might be affected during daytime, which could bring unexpected uncertainties in regression and subsequently in flux estimation. 
+
+In this paper, CO~2~ flux measurements with automated transparent chambers were carried out at a variety of grasslands. We intended (1) to test the performance of automated transparent chambers, (2) to find the optimal calculation procedure from linear and exponential regressions for daytime CO~2~ flux estimation, and (3) to improve the reliability of daytime chamber CO~2~ flux estimation over short-statured canopies. 
+
+# Methods
+
+## Sites
+
+Field campaigns were carried out at four grassland sites across the Alps in Italy, Austria and Germany episodically in 2015 and 2016 (Table 1) .  These sites covered a range of terrain types which were typical for mountains with varying degrees of complexity.
+
+Table 1: Site information
+
+| Site               | Coordinates      | Elevation | Measurement Periods |
+| ------------------ | ---------------- | --------- | ------------------- |
+| Monte Bondone (MB) | 47°01'N, 11°04'E | 1550 m    | Oct. 2015           |
+| Hochhäuser (HH)    | 47° 17'N, 11°38'E | 1010 m    | May 2016            |
+| Fendt (FT)         | 47° 50'N, 11°04'E | 595 m     | July 2016           |
+| Neustift (NS)      | 47° 07'N, 11°19'E | 970 m     | Oct. 2016           |
+
+The experiment at Monte Bondone site (FLUXNET site code: IT-MBo, abbreviated as MB in this study) was performed in October, 2015. MB is situated on a typical low productive meadow on a mountain plateau in north Italy [@marcolla2011]. The mean annual temperature is 5.5 °C and the total mean annual precipitation is 1189 mm.  The vegetation is dominated by *Festuca rubra (L.), Trifolium sp. (L.), and Nardus stricta (L.)*.  The canopy height was 0.19 m during the campaign.
+
+The field campaign at Hochhäuser site (HH) was carried out in May 2016. HH  is situated on a steep (27°) slope of the mountainous area in the Inn Valley in Austria [@rotach2017]. Daily mean temperature typically ranges from –1°C in winter to +20°C in summer. The total mean annual precipitation is about 1100 mm. The canopy height was 0.35 m during the campaign. 
+
+The field measurement took place at Fendt site (FLUXNET site code: DE-Fen, abbreviated as FT in this study) during the ScaleX campaign in July 2016  [@wolf2017]. FT is located in a drained alluvial area with increasing mountainous features in Germany and is part of the TERrestrial Environmental Observatory (TERENO) network [@zacharias2011; @zeeman2017]. The canopy height was 0.20 m during the campaign. 
+
+The experiment at Neustift (FLUXNET site code:AT-Neu, abbreviated as NS in this study) was performed in October 2016. NS is located in the middle of the flat bottom of the Stubai Valley in Austria with an annual temperature of 6.5 °C and precipitation of 852 mm [@wohlfahrt2008]. The soil is a Fluvisol (FAO classification) covered mainly with graminoid (*Dactylis glomerata, Festuca pretensis, Phleum pratensis, Trisetum flavescens*) and forb (*Ranunculus acris, Taraxacum officinale, Trifolium repens, Trifolium pratense, Carum carvi*) species. The canopy height was 0.10 m during the campaign.
+
+## Instrumentation
+
+This study used three automated closed transparent chambers (LI-8100-104C, LI-COR Biosciences, Lincoln, NE USA) to measure net CO~2~ fluxes between the surface and the atmosphere. The chamber had a surface area of 317.8 cm^2^, a transparent dome with a height of 33 cm, and a headspace volume of approximately 4080 cm^3^, which varied a little due to different offsets of the cylindrical collars installed in the soil. The chamber was designed to avoid perturbations to the disturbance from the surrounding environmental conditions such as  the heating for the surface under the base plate, and the pressure pulse at chamber closing [@riederer2014; @goerres2016].
+
+At MB, HH, and NS the chambers were operated under the control of a data-logger (CR1000, Campbell Scientific, Inc., Logan, UT, USA)-microcontroller (Arduino MEGA2560, Smart Projects, Ivrea, Italy) system. Air was circulated from the chamber to an infra-red gas analyzer (IRGA, Li-840a, LI-COR, Lincoln, NE, USA) and then returned to the chamber with a flow rate of 1 l min^-1^. When a measurement started, the sampling system was flushed with ambient air for 1 minute as a pre-purge process, including a closing process time of 15 seconds. Afterwards the chamber dome was moved by a mechanical arm and then rested on the collar installed one day before the experiment started. Then a 150-second measurement began with the first 15 seconds as the deadband, and the subsequent time as the observation length. After one measurement ended, the chamber dome was lifted by the arm and rotated 180° away from the collar as an open status, and the control system switched the air-sampling line to another chamber by solenoid valves. This protocol was repeated every 30 minutes.  The CO~2~ mixing ratio was recorded every 3 seconds, and was converted into dry mole fraction on the data-logger. At FT site, the chambers were managed by a control unit (LI-8100A, LI-COR, Lincoln, NE, USA) and a multiplexer (LI-8150, LI-COR, Lincoln, NE, USA). The CO~2~ mixing ratio was recorded at 1 Hz. The raw datasets were quality controlled with the software package by @lueers2014.
+
+As ancillary information, the latent heat fluxes were measured with the eddy-covariance technique at each site. The instrumentation and flux calculation were well documented in @marcolla2011 for MB, @wohlfahrt2008 for NS, and @mauder2013 and @zeeman2017 for FT. At HH, the eddy-covariance system was equipped with a three-dimensional sonic anemometer (CSAT3, Campbell Scientific, Inc., Logan, UT, USA) and an open-path infra-red gas analyzer (Li-7500, Li-Cor, Lincoln, NE, USA) at 1.9 m above the ground, which performed the measurement at 20 Hz. Half-hourly mean latent heat fluxes were calculated as the covariance between the turbulent departures from the mean of the vertical wind speed and the H~2~O mixing ratio using the post-processing software EdiRe (University of Edinburgh). The post-processing procedure and quality control followed @hammerle2007, who successfully carried out eddy covariance measurement at a grassland site with a steep slope in the same region and  concluded that measurements made above a mountain meadow on a steep slope are of similar quality as fluxes measured over flat terrain after appropriate quality control.
+
+
+## Flux calculation
+
+The CO~2~ flux ($F$, $\mu$mol m^-2^s^-1^) was calculated as [@licor2010] 
+
+\begin{equation} 
+F = \frac{10 V P_0 (1 - \frac{W_0}{1000})f_0}{RS  (T_0 + 273.15)},
+(\#eq:flux)
+\end{equation} 
+where  $f_0$ is the initial rate of change in water-corrected CO~2~ mole fraction ($C$, $\mu$mol mol^-1^)  inside the chamber, i.e. $f_0 = {\partial C}/{\partial t} | _{t = t_0}$,  $V$ (cm^3^) is the chamber volume, $S$ (cm^2^) is soil surface area, $T_0$ (°C) is the initial air temperature, $P_0$ (kPa) is the initial air pressure, $W_0$ (mmol mol^-1^) is the initial water vapor mole fraction, and $R$ (= 8.314 Pa m^3^K^-1^mol^-1^) is the ideal gas constant. The subscript 0 means a variable's value at $t = t_0$, where $t_0$ is the initial time.
+
+The linear regression is a common algorithm to estimate $f_0$ owing to its simplicity. The least squares method is applied to fit a straight line presented as
+
+\begin{equation} 
+C = a_0 +a_1 t, 
+(\#eq:linear)
+\end{equation} 
+
+where $a_0$ and $a_1$ are the intercept and slope of the line, respectively, and $t$ is the measurement time. Thus $f_0$ can be calculated as
+
+\begin{equation} 
+f_0 = \frac{\partial C}{\partial t} | _{t = t_0} = a_1.
+(\#eq:a1)
+\end{equation} 
+
+The linear regression method requires a short measurement duration. In this study, we used two strategies to define the measurement time. The first strategy, which was abbreviated as Lin1, used the entire measurement, i.e. 150 seconds after a chamber was closed. The second method, which was abbreviated as Lin2, used the data from the beginning of a measurement to the first stationary point (i.e. the point on the graph of the function where the function's derivative is zero), which was defined by the first minimum value of a fourth-order polynomial fitted to the time series of the observed CO~2~ mixing ratio.  
+
+<!-- fourth-order was chose because it agrees best to visual inspection.
+-->
+<!--
+
+(A third method (abbreviated as Lin3, not applied yet until now) used each pair of neighbored data in CO~2~ mixing ratio time series for linear regression, and extrapolated the fitted slope to $t_0$.)
+
+-->
+
+In order to account for the disturbance by the chamber closure on the CO~2~ gradient, an empirical non-linear function in an exponential form was proposed by @mello1994 in an exponential way and later modified as [@xu2006; @licor2010]:
+
+\begin{equation} 
+C = C_x + (C_0 - C_x) e ^ {-k(t-t_0)},
+(\#eq:exp)
+\end{equation} 
+
+where $C_x$ is the maximum mixing ratio of CO~2~  when equilibrium is established between  the soil and the air in chamber, $C_0$ is the initial CO~2~ mixing ratio computed as the intercept of a linear regression of the first 15- seconds CO~2~ mixing ratio after the chamber closes.  $t_0$ is the time when $C = C_0$, and $k$ is a constant accounting for the concentration saturation rate [@licor2010]. $C_x$, $t_0$ and $k$ were fitted to the time series of the observed CO~2~ mixing ratio in an iterative way using the optimization function in R language [@rbase]. Subsequently, $f_0$ was calculated as 
+
+\begin{equation} 
+f_0 = \frac{\partial C}{\partial t} | _{t = t_0} = k(C_x - C_0).
+(\#eq:f0)
+\end{equation} 
+
+Similarly to the linear regression algorithms, two non-linear strategies were performed. The one using the entire measurement period was abbreviated as Exp1, and the other using the data from the beginning of a measurement  to the first stationary point in the CO~2~ mixing ratio time series was abbreviated as Exp2.
+
+We used the root mean square error (RMSE) to evaluate the goodness-of-fit (GOF) for each algorithm, expressed as
+
+<!---
+coefficient of determination ($R^2$) and
+
+$$R^2 =(\frac{\sum_{i=1}^{n}(O_i-\overline{O})(P_i-\overline{P})}{\sqrt{\sum_{i=1}^{n}(O_i-\overline{O})^2}\sqrt{\sum_{i=1}^{n}(P_i-\overline{P})^2}) })^2,$$
+--->
+
+\begin{equation} 
+\text{RMSE}=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(P_i-O_i)^2},
+(\#eq:rmse)
+\end{equation} 
+
+where $P$ is the predicted value, $O$ is the observed value, and $i$ is the $i$-th record.
+
+# Results and Discussion
+
+## Case studies
+
+Two examples of CO~2~ mixing ratio evolution in the chamber measurements are illustrated as case studies in Fig. \@ref(fig:fig1). Both measurements took place on clear-sky days at FT site (Case A: 2016.07.11 13:12; Case B: 2016.07.15 12:12). 
+
+Case A shows an expected pattern of CO~2~ mixing ratio evolution in a chamber. At the beginning of the curve in Fig. \@ref(fig:fig1)a, it took seconds to establish the steady air mixing after the chamber closed. Then the CO~2~ mixing ratio decreased sharply due to the ecosystem net uptake of CO~2~, which subsequently decreased the CO~2~ gradient between the canopy and the air above, and further decreased the change rate of the CO~2~ mixing ratio. Because no stationary point was found in the fourth-order fitted polynomial curve, all the four regression algorithms used the same data-set for regression. The RMSE of the linear regressions was `r dt_cs$rmse_Lin1[2]` ppm, much greater  than the exponential regressions with RMSE = `r dt_cs$rmse_Exp1[2]` ppm.  The linear regressed straight line of Lin1 and Lin2 gave a slope of `r dt_cs$f0_Lin1[2]` ppm s^-1^, and the exponential curve of Exp1 and Exp2 gave an initial slope of `r dt_cs$f0_Exp1[2]` ppm s^-1^. The ratio between them was `r dt_cs$f0vsref_Lin1[2]` : `r dt_cs$f0vsref_Exp2[2]` , which indicates that the linear regressions underestimated $f_0$ from the exponential regressions remarkably. 
+
+(ref:fig1) Case study of the CO~2~ mixing ratio evolution in chamber flux measurements. The left panel is Case A, the right panel Case B. The sub-figures a and e are two patterns of CO~2~ mixing ratio evolution. Points in gray: measurements. Curves in black, gray, green, blue, and red: fitted curves by the linear and exponential regression methods abbreviated as Lin1, Lin2, Exp1, Exp2, and Exp3, respectively. These abbreviations are explained in Sec. 2 and Sec. 3.2. Dotted vertical line: indicating the mathematical stationary point of the  fourth-order fitted polynomial curve. The sub-figures b and f are water vapor mixing ratio, c and g are chamber air temperature, d and h are vapor pressure deficit (VPD) at the chamber wall
+
+```{r fig1, fig.cap='(ref:fig1)', fig.height=10, fig.width=10, out.width= '90%', fig.align='center'}
+fig_cs()
+# knitr::include_graphics('images/casestudies.pdf')
+```
+
+<!---
+Case B displays a pattern with a slight drift in $C_x$ (Fig. \@ref(fig:fig1)b). The stationary-point time ($t_s$) was `r signif(dt_cs$tmin[1], 3)` s (vertical dotted line), and CO~2~ mixing ratio slightly increased after $t_s$ from 371 ppm to 377 ppm. Therefore, the absolute value of linear slope $f_0$ by Lin1 ($f_0$ = `r dt_cs$f0_Lin1[1]` ppm s^-1^) was slightly smaller than that by Lin2 ($f_0$ = `r dt_cs$f0_Lin2[1]` ppm s^-1^). RMSE of Exp1 and Exp2 were `r dt_cs$rmse_Exp1[1]` and  `r sprintf('%.2f', dt_cs$rmse_Exp2[1])` ppm, respectively, smaller than those by Lin1 (RMSE = `r dt_cs$rmse_Lin1[1]` ppm) and Lin2 (RMSE = `r dt_cs$rmse_Lin2[1]` ppm). Exp2 was the most reliable simulation due to the smallest RMSE in this case. Therefore,  we used Exp2 as reference. The ratio of the fitted slopes is Lin1 : Lin2 : Exp1 : Exp2 = `r dt_cs$f0vsref_Lin1[1]` : `r dt_cs$f0vsref_Lin2[1]` : `r dt_cs$f0vsref_Exp1[1]` : `r dt_cs$f0vsref_Exp2[1]`, which showed again the underestimation of the linear regressions, meaning that CO~2~ flux estimated by linear regressions is only `r dt_cs$f0vsref_Lin1[1] * 100` % to `r dt_cs$f0vsref_Lin2[1] * 100` % of the flux estimated by non-linear regression Exp2.
+--->
+
+Case B displayed a pattern with a remarkable reversal in $C$ (Fig. \@ref(fig:fig1)e). The stationary-point time ($t_s$) was only `r signif(dt_cs$tmin[1], 3)` s, and the CO~2~ mixing ratio increased sharply from 365 ppm at $t_s$ to 380 ppm at the end of the measurement period. The abnormal evolution of CO~2~ mixing ratio resulted in the opposite signs of $f_0$ between Lin1 (`r dt_cs$f0_Lin1[1]` ppm s^-1^, nearly neutral) and Lin2 (`r dt_cs$f0_Lin2[1]` ppm s^-1^), while Lin2 had a much smaller RMSE of (`r dt_cs$rmse_Lin2[1]` ppm) than Lin1 (`r dt_cs$rmse_Lin1[1]` ppm). RMSE of Exp1 and Exp2 were `r dt_cs$rmse_Exp1[1]` and  `r sprintf('%.2f', dt_cs$rmse_Exp2[1])` ppm, respectively, both smaller than those by the linear regression methods. As Exp2 was the most reliable simulation due to the smallest RMSE in this case,  we used Exp2 as reference. The ratio of the fitted slopes was Lin1 : Lin2 : Exp1 : Exp2 = 
+`r dt_cs$f0vsref_Lin1[1]` : `r dt_cs$f0vsref_Lin2[1]` : `r dt_cs$f0vsref_Exp1[1]` : `r dt_cs$f0vsref_Exp2[1]`. 
+
+These case studies demonstrate that (1) the exponential methods fitted the observed data better than the linear methods even if the observation length is as short as 1 minute, and that (2) the rate of CO~2~ mixing ratio change in a transparent chamber as well as the CO~2~ flux can be underestimated by 40 % in comparison with the exponential fit method, which agrees with other studies, such as N~2~O flux measurements by @kroon2008, or CO~2~ flux measurements by @kutzbach2007, who indicated that the initial slope of linear regressions can be as low as 40 % compared to the initial slope of the exponential regression for closure times of only 2 min. According to Fick's law, the gas flux is dependent on the diffusivity of the soil and the gas concentration gradient. When the chamber is closed, saturation or leakage of CO~2~ could take place, resulting in a disturbance of the concentration gradient within and above the soil, which is ignored by the linear fit method. Thus, @kutzbach2007 indicated that the flux is underestimated by the linear fit method, which is inappropriate for closed-chamber methods because it seriously biases CO~2~ flux estimates. Alternatively, it is suggested that the exponential function is superior because it is closer to the reality if compared to the linear regression algorithm based on a goodness-of-fit analysis [@kroon2008]. 
+
+Note that although the estimated fluxes by Exp2 are not necessarily the true CO~2~ fluxes, Exp2 was used as the reference, because it was the best simulation of CO~2~ mixing ratio evolution. @kutzbach2007 proposed a conceptual model based on biophysical processes including the gas diffusion from the soil, the plants' photosynthesis and respiration, as well as leaks of the chamber or through the soil, and concluded that the exponential regression was the most accurate approach to reflect the CO~2~ mixing ratio evolution in chamber measurements from complex vegetation-soil systems despite the possible underestimation indicated by @matthias1978 and @livingston2006.
+
+## Clouded-Glass Effect
+
+The evolution of the CO~2~ mixing ratio in Case B could hardly be explained by the exponential model. The CO~2~ mixing ratio evolution was visually close to a roughly linear increase with noise after $t_s$ (Fig. \@ref(fig:fig1)b), which was found in  approximately 30 % of the daytime chamber measurement in the campaigns. We mathematically added a linear term as a compensation into Eq. \@ref(eq:exp) , expressed as (abbreviated as Exp3 in this study):
+
+\begin{equation} 
+C = C_x + k'(t-t_0) + (C_0 - C_x) e ^ {-k(t-t_0)}, 
+(\#eq:new)
+\end{equation} 
+
+where $k'$ (ppm s^-1^) is a fitting parameter. 
+
+<!---Thus, Exp3 calculates $f_0$ as 
+
+$$f_0 = \frac{\partial C}{\partial t} | _{t = t_0} = k(C_x - C_0) + k' .$$
+
+--->
+
+The performance of Exp3 is displayed as the red curves in Fig. \@ref(fig:fig1). In Case A, the fitted curve of Exp3 overlapped with that of Exp1 and Exp2. The exponential regressed initial slope by Exp3 was very close to Exp1 and Exp2 with $f_0$ = `r dt_cs$f0_Exp3[2]` ppm s^-1^ and negligible $k' =$ `r round(dt_cs$k_prime[2], 4)` ppm s^-1^. In Case B, Exp3 captured the reversal in $C$, giving a fitted $k'$ of `r dt_cs$k_prime[1]` ppm s^-1^, which accounted for `r dt_cs$k_prime_eff[1]` % of $f_0$ by Exp2. RMSE of Exp3 was `r dt_cs$rmse_Exp3[1]` ppm, smaller than that of Exp1. 
+
+<!--- chamber 2
+Consequently, the CO~2~ fluxes estimated by Lin1 and Exp1, which used the entire measurement time, show a net release to the atmosphere, while the fluxes estimated by Lin2 and Exp2, which used the time before the stationary-point, show a net uptake of CO~2~. The best simulation, Exp3, using the measured data sufficiently and giving the lowest RMSE, gives a CO~2~ flux 91 % of Exp2.
+--->
+
+To our knowledge, there is surprisingly little information in the existing literature about inexplicable curvatures of gas concentration time series in transparent chamber measurements. The most informative study mentioning such behavior of trace gas concentration in chamber measurements was by @kroon2008, who classified the gas concentration evolution into eight patterns in 25-min measurements, and discarded half of them because they were physically unexplainable. @kutzbach2007 reported that 20 % to 40 % of the fitted curves did not conform to the theoretical model, which was suggested to have been caused by violations of the basic assumptions of the theoretical model. 
+
+In our field campaigns, we visually observed during daytime that tiny water drops (dew) condensed increasingly on the inner wall of the chamber domes after the chamber closed until the dome of the chamber was as opaque as clouded glass, which must decrease the solar radiation received under the dome. In order to study the clouded-glass effect (CGE), the water vapor mixing ratio and the air temperature in the chamber, as well as the vapor pressure deficit (VPD) at the chamber dome were plotted in parallel with Case A (Fig. \@ref(fig:fig1)b -- d) and B (Fig. \@ref(fig:fig1)f -- h). It was assumed that the dome temperature was equal to the ambient air temperature, according to which VPD was calculated. The water vapor mixing ratio (approximately ~ $20 \times 10 ^3$ ppm) in the chamber rose after the chamber closed (Fig. \@ref(fig:fig1)b) because of the evapotranspiration of the vegetation and soil covered by the chamber dome. In the meanwhile the surface was heated, which increased the chamber air temperature, while the ambient air temperature as well as the dome temperature remained nearly constant in the 150-sec measurement. In Case B the chamber air humidity was high ( approximately 59 -- 65 $\times 10 ^3$ ppm, Fig. \@ref(fig:fig1)f), therefore the difference between the chamber and ambient air temperatures resulted in the saturation of water vapor (VPD ~ 0, Fig. \@ref(fig:fig1)h) on the inner wall of the chamber dome. Note that negative VPD appeared in Fig. \@ref(fig:fig1)h, probably because the assumption that the dome temperature should equal the ambient temperature was not warranted. The dome temperature could be either higher or lower than the ambient temperature, which depends on the heating or the cooling of the air in the chamber, the specific heat capacity and the thermal conductivity of the dome. If the inner wall of the dome is heated by the warm inner air, then the true dome temperature could be higher than the ambient temperature, which results in a greater saturation water vapor pressure near the dome. Consequently, the actual VPD could be higher than the values shown in Fig. \@ref(fig:fig1)d and h, which could explain the negative estimated VPD values. Considering the small change rate of chamber air temperature, the deviation in the VPD estimation is slight. As a consequence, the water vapor condensed on the inner wall of the chamber dome gradually, which reduced the solar radiation in the chamber and as a consequence the photosynthesis of the vegetation [@zhao2016], and thus the net exchange of CO~2~ turned from negative (towards the surface) to positive (away from the surface) after $t_s$. 
+
+The water vapor condensation on the chamber walls was first discussed by @rochette2005, who indicated that the condensed water slightly affects the CO~2~ concentration by changing the headspace volume and by absorption-desorption of CO~2~, resulting in 3 % overestimation of the flux. Note that @rochette2005's study was focused on soil respiration. For transparent chambers with plant transpiration and photosynthesis involved, the water vapor condensation could result in 22 % underestimation of CO~2~ flux estimation by the transparent chamber technique in the case study, if we assume that $k'$ in Eq.\@ref(eq:new) mainly accounts for the reversal in $C$ by CGE.
+
+## Determination of observation length
+
+We had in total `r dt_tc['all', 'n']` measurements of daytime (9:00 to 15:00 LST) chamber CO~2~ fluxes in the four campaigns, among which `r dt_tc['all', 'ntc']` measurements (i.e. `r dt_tc['all', 'percent']` %) showed a Case B pattern with a stationary-point time $t_s<150$ s. The distributions of $t_s$ values for each site are shown in Fig. \@ref(fig:fig2). As none of these patterns follows a normal distribution, we use the median and interquartile range (IQR) to describe the statistics of $t_s$. 
+
+(ref:fig2) Distribution of the stationary-point time ($t_s$) at FT (a), HH (b), MB (c), and NS (d). *n* is the sample size. Vertical lines indicate the median (blue), the first and third quartiles (green), and the minimum and maximum (red).
+
+```{r fig2, fig.cap='(ref:fig2)', fig.height=8, fig.width=8, out.width= '80%', fig.align='center'}
+fg_tc()
+# knitr::include_graphics('images/tchist.pdf')
+
+```
+
+A stationary-point $t_s<150$ s was found in a remarkable percentage, i.e. `r paste(dt_tc$percent[1:4], ' %', sep = '', collapse = ', ')` of the measurements at `r paste(dt_tc$site[1:4], collapse = ', ')`, respectively. The medians of $t_s$ ranged from `r min(dt_tc$median)` s (NS) to `r max(dt_tc$median)` s (FT). Half of the number of $t_s$ were distributed around the medians with the IQR ranging from `r min(dt_tc$iqr)` s to `r max(dt_tc$iqr)` s. The minimums of $t_s$ ranged from 23 s (NS) to 41 s (FT). As Sec. 3.1 showed the influence of $t_s$ on the flux calculation, such a substantial fraction of the measurements with small $t_s$ indicates that the observation length for regression must be taken into consideration.
+
+The diurnal patterns of daytime $t_s$ for each site are shown as box plots in Fig. \@ref(fig:fig3). At FT and HH sites, notable diurnal changes were found in $t_s$ with small median values less than 80 s around mid-day (11:00 to 13:00). In other hours, $t_s$ was relatively greater, most of which were above 90 s. At NS, although the diurnal changes in both $t_s$  and latent heat flux were insignificant, most $t_s$ values were smaller than 70 s in all hours of daytime.
+
+(ref:fig3) Diurnal patterns of the stationary-point time ($t_s$) (boxplots), latent heat fluxes (blue lines), and ambient vapor pressure deficit (VPD, red dash lines). The boxplots are composed of the median (solid line), the lower quartile and upper quartile (box), the lowest datum still within 1.5 times of interquartile range (IQR) of the lower quartile, and the highest datum still within 1.5 IQR of the upper quartile (markers).
+
+```{r fig3, fig.cap='(ref:fig3)', fig.height=6, fig.width=8, out.width= '100%', fig.align = "center"}
+fg_tcd4()
+# knitr::include_graphics('images/tc_hourly.pdf')
+```
+
+The diunal changes in $t_s$ were probably due to the influence of evapotranspiration. As supplementary information, the mean latent heat fluxes (the equivalent energy term of evapotranspiration) during the corresponding field campaigns from nearby eddy-covariance measurements are shown in Fig. \@ref(fig:fig3) as well. At mid-day the solar radiation was strong, which enhanced the evapotranspiration and consequently resulted in the high humidity in the chamber and condensed water on the inner wall of chamber domes. Note that $t_s$ at NS was small even when the evapotranspiration was low, probably because of the low VPD during the campaign. 
+
+The selection of observation time for chamber measurements was empirical in the literature. For instance, the observation length of CO~2~ flux estimation ranged between 1.5 min to 10 min [@wohlfahrt2005; @kutzbach2007; @savage2008; @koskinen2014;@goerres2016; @guidolotti2017; @kostyanovsky2018], and that of other green house gases such as CH~4~ and N~2~O ranged between 10 min to 25 min [@hendriks2007; @kroon2008; @savage2014]. Most of the published studies on chamber CO~2~ flux measurements were taken with dark chambers or at night for only ecosystem respiration. @riederer2014 deployed automated transparent chambers for CO~2~ flux measurements with an observation length of 1.5 min.
+<!---2 min to 10 min [@Kutzbach2007], 5 min [@savage2008], 2 -- 4 min [@koskinen2014], 1.5 min [@riederer2014] transparent,  3 min [@goerres2016], 8 min [@kostyanovsky2017], 1.5 min [@guidolotti2017]
+10 minutes - 25 min other trace gas CH4, N2O[@hendriks2007]  N2O [@kroon2008], CH4, N2O [@savage2014]--->
+It was reported that the performance of fitting is strongly dependent on the selected duration of the observation [@kutzbach2007; @koskinen2014]. Generally the measurement time should be as short as possible [@kutzbach2007]. Our results indicated that care must be taken when using transparent chambers for daytime CO~2~ flux measurement at grasslands, especially around noon time, as $t_s$ could be smaller than one minute.
+
+## Overall performance of all algorithms
+
+This study tested five algorithms for all four campaigns in order to investigate the difference between them (Fig. \@ref(fig:fig4), using RMSE by Exp2 as reference). Most (`r dt_rm['overall', 'Lin1_Exp2']`  %) of RMSEs by both Lin1 and Lin2 regression algorithms were larger, indicating a poorer fit, than the RMSEs by Exp2. Especially, among the measurements with the stationary point $t_s < 150$ s, `r dt_rm['tc', 'Lin1_Exp2']`  % of Lin1 RMSEs and `r dt_rm['notc', 'Lin1_Exp2']` % of Lin2 RMSEs were larger than Exp2 RMSEs. Regarding the exponential regressions, `r dt_rm['tc', 'Exp1_Exp2']`  % of Exp1 RMSEs were larger than Exp2 RMSEs among those measurements with $t_s < 150$ s. Exp3 showed the best agreement with Exp2, i.e. only `r dt_rm['overall', 'Exp3_Exp2']`  % of RMSEs were slightly larger than Exp2 RMSEs. For the measurements where no stationary point was found, Exp3 performed even better than Exp2 with lower RMSEs in some cases.
+
+<!--
+
+Presuming that the exponential regression Exp2 describes the real CO~2~ concentration evolution, we plotted RMSE by Exp2 as $x$ and others as $y$.
+
+$f_0$ by Exp2 as x and others as y, thus the deviation of $y$s indicates the bias of each algorithm. Most of the absolute values of Exp were greater than those of Lin. The underestimation by Lin was observed for all sites. The difference between sites.
+-->
+
+
+
+(ref:fig4) Comparisons of the Lin1 regression (a, b), the Lin2 regression (c, d), the Exp1 regression (e, f) and the Exp3 regression (g, h) against the Exp2 regression by the root mean square error (RMSE). The upper panel indicates the data with the stationary point time *t~s~* not found in the 150-s measurement, and the lower indicates the data with *t~s~* < 150 s found. The blue dotted line is the 1:1 line.
+
+```{r fig4, fig.cap='(ref:fig4)', fig.width=8, out.width= '100%', fig.align = "center"}
+# {r fig4, fig.cap='(ref:fig4)', fig.height=8, fig.width=16}
+fg_rmse() # \includegraphics[width=1\linewidth]{images/rmse.pdf}
+# knitr::include_graphics('images/rmse.pdf')
+
+```
+
+<!---
+Non-linear regressions are sensitive to the starting values. A case study shown in Fig. # indicates that different starting  values result in largely different fitted curves. 
+--->
+
+In order to investigate the influence of different algorithms on flux calculation, the fitted initial curve slopes ($f_0$) were used to subsequently calculate CO~2~ fluxes ($F$). Reliable fluxes can be derived only if poorly fitted measurements are filtered before calculation. Thus, those slopes with RMSE > 5 ppm were rejected. Approximately 80 % of the linear slopes and 93 % -- 98 % of the exponential regressed slopes were finally accepted for calculation of the fluxes in the four campaigns. 
+
+The averaged daytime CO~2~ flux ($F$) patterns derived from the five algorithms are shown in Fig. \@ref(fig:fig5). Obviously the fluxes fall into two groups as a linear regression group and an exponential regression group. Although $F$ values derived from Lin2 are slightly closer (than Lin1) to those from exponential regressions, both Lin1 and Lin2 significantly underestimated $F$ from the exponential models throughout the daytime, especially at noon. The mean ratio of *F*~Lin1~ / *F*~Exp2~ is `r dt_fs['mean', 'Lin1r']`, ranging between `r dt_fs['min', 'Lin1r']` and `r dt_fs['max', 'Lin1r']`, while the mean ratio of *F*~Lin2~ / *F*~Exp2~ is `r dt_fs['mean', 'Lin2r']`, ranging between `r dt_fs['min', 'Lin2r']` and `r dt_fs['max', 'Lin2r']`.
+
+
+(ref:fig5) Comparison of daytime CO~2~ fluxes of all regression  (black: Lin1; gray: Lin2; green: Exp1; blue: Exp2; red: Exp3) algorithms for four sites.
+
+```{r fig5, fig.cap='(ref:fig5)', fig.height=7, fig.width=8, out.width='80%', fig.align='center'}
+fg_f2()
+# knitr::include_graphics('images/flux.pdf')
+```
+
+Among the exponential regression group, most (`r dt_f3`  %) of the flux data by Exp1 were smaller than those of Exp2, with a mean ratio of *F*~Exp1~ /*F*~Exp2~ = `r dt_fs['mean', 'Exp1r']`. These underestimated values occurred mainly at MB and NS. Note that *F*~Exp1~ was even closer to *F*~Lin2~ than to *F*~Exp2~ in the afternoon at NS (Fig. \@ref(fig:fig5)d), because the fitted slopes by Exp1 had large RMSE (Fig. \@ref(fig:fig4)). If we reject the fitted measurement with RMSE  <  5 ppm, then the curve of Exp1 on Fig. 5d would be closer to Exp2 and Exp3, which is not shown. The best agreement with Exp2 among the exponential regression is for Exp3. The ratio *F*~Exp3~ / *F*~Exp2~ had a mean of `r dt_fs['mean', 'Exp3r']` and a range between `r dt_fs['min', 'Exp3r']` and `r dt_fs['max', 'Exp3r']`. The flux values by Exp3 were close to those by Exp2 at MB and NS. Large values of $F$~Exp3~ mostly occurred at FT site with $F_\text {Exp3} / F_\text {Exp2}$ ranging from `r dt_f5[1]` to `r dt_f5[2]`. At HH site, *F*~Exp3~ /*F*~Exp2~ ranged between `r dt_f6[1]` to `r dt_f6[2]`, when most (`r dt_f7` %) fluxes by Exp3 were smaller than those by Exp2. 
+
+<!--
+Paired-Student's test were performed to investigate weather one regressed slope is significantly greater than another.
+
+The CO~2~ fluxes and the cumulative CO~2~ uptakes calculated with five algorithms are shown in Fig. #. The cumulative uptakes derived from the linear fit algorithms (Lin1 and Lin2) has significant difference from those derived from the non-linear fit algorithms. pair-plot of fluxes from all algorithms.
+
+The differences in fluxes between the five algorithms lead to large difference in the cumulative uptakes. The cumulative uptakes based on the linear regression algorithms are xx, xx, xx, and xx% of those based on the non-linear regression algorithms. A Taylor diagram (Fig. x ) shows that the non-linear regression algorithms give more accurate response than the linear regression method.
+
+Fluxes estimated with the non-linear regression algorithm were compared with those estimated with Lin3 algorithm (Fig. #). The total amounts of daytime CO~2~ uptake by Lin3 are % of the CO~2~ uptake by Exp3. 
+
+-->
+
+In the literature, @kutzbach2007 reported that the CO~2~ flux estimated by linear regression can be as low as 40 % compared to that by exponential regression for observation times of only 2 min. @kroon2008 demonstrated that the linear regression method underestimated the N~2~O flux  by 20 % at a sampling time of 3 minutes, and this underestimation increased drastically with time. Our study suggested that the linear regression in automated transparent chambers must be abandoned, as it gives poor goodness-of-fit statistics and underestimates the CO~2~ flux by as much as 60 % -- 70 % compared to the exponential regression even for short observation times of 1 -- 2 minutes.
+
+
+# Conclusion
+
+The problems of the automated transparent chamber technique for CO~2~ flux measurement were addressed in this study. Field campaigns were carried out at four alpine grasslands, with linear regression and exponential regression methods as well as different observation time choices applied for flux estimation. 
+
+The goodness-of-fit statistics showed that the linear method dramatically biased the chamber CO~2~ mixing ratio evolution, which was around 32 % -- 39 % of the flux by the exponential method. The nonlinear change in CO~2~ mixing ratio in the transparent chambers started shortly after the chamber was closed. Shortening the observation time to 1 -- 2 minutes did not improve the regression. Therefore, it is suggested that the linear regression method should be abandoned in transparent chamber measurement for daytime CO~2~ fluxes.
+
+Abnormal behavior of CO~2~ concentration time series in the chambers could be explained by the so-called Clouded Glass Effect (CGE), i.e. condensed water drops on the inner wall of the chamber dome, due to the evapotranspiration of the soil and vegetation. Affected by the CGE, the determination of the observation time is critical to the performance of the exponential regression methods. A 150-sec observation time (Exp1) underestimated the chamber CO~2~ flux by 5 % compared to the flux estimated from a short observation time which is determined by the mathematic stationary point in CO~2~ mixing ratio time series (Exp2). 
+
+In order to avoid the influence of the CGE on flux estimation, care must be taken with automated transparent chambers for trace-gas flux measurement, especially in humid areas or regions with high evapotranspiration. Therefore we propose the following suggestions. 
+
+(1) Automated clear chamber systems should be configured to measure long enough ($\le$ 150 sec according to this study), so that the users can have the chance to apply any of the proposed (or future) methods to account for the CGE or other effects. The drawback is that the online computed outcomes  (in case of LI-8100A) won’t be reliable when the time series include the mixing ratio measurements longer than $t_s$. Then post-processing will be the default configuration. 
+
+(2) The observation time might be chosen visually, but a long-term measurements could collect a large dataset, then the fourth-order polynomial can be an automated method to find the stationary-point time in the CO~2~ mixing ratio time series (Exp2), which was demonstrated to improve the exponential regression remarkably. 
+
+(3) The linear term in Eq. \@ref(eq:new) accounting for the reversal in CO~2~ concentration (Exp3) can better fit the CO~2~ mixing ratio evolution. As the goodness-of-fit statistics showed that the exponential regression in Eq. \@ref(eq:new) performed close to Exp2, Exp3 could represent an alternative to estimate the CO~2~ flux and the influence of CGE on flux calculation.
+
+(4) The condensation on chamber domes can easily be detected with  manual chambers, but such information is currently missing for automated chambers, which are designed for long term unattended measurements. New techniques in hardware are expected to solve the CGE, such as additional solar radiation measurements under the chamber dome as a quality control information, or auxiliary desiccants which can avoid the condensation on the inner wall of the chamber dome. 
+
+# Acknowledgement{-}
+
+We are grateful to the colleagues from the Biomet group, Institute of Ecology, University of Innsbruck for support during the field work. We appreciate the support from Edmund Mach Foundation. This study was funded by the Austrian Science Fund (FWF, P26425-B16). The TERrestrial Environmental Observatory (TERENO) pre-Alpine infrastructure is funded by the Helmholtz Association and  the Federal Ministry of Education and Research. We thank the Scientific Team of ScaleX Campaign 2016 for their contribution.  Matthias Zeeman received support from the German Research Foundation (DFG; project ZE1006/2-1). 
+
+# References {-}
